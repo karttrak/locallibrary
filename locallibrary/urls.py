@@ -23,17 +23,10 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-]
-
-# Use include() to add paths from the catalog application
-urlpatterns += [
+    # Use include() to add paths from the catalog application
     path('catalog/', include('catalog.urls')),
-]
-
-# Add URL maps to redirect the base URL to our application
-urlpatterns += [
+    # Add URL maps to redirect the base URL to our application
     path('', RedirectView.as_view(url='catalog/', permanent=True)),
-]
+    # Use static() to add URL mapping to serve static files during development (only)
+] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
-# Use static() to add URL mapping to serve static files during development (only)
-urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
